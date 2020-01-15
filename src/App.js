@@ -6,6 +6,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './pages/homepage/homepage';
 import SignInPage from './pages/signinpage/signinpage';
 import Header from './components/header/header';
+import CreateStoryPage from "./pages/createstorypage/createstorypage";
+import UserPage from "./pages/userpage/userpage";
 
 // import firebase
 import { auth, createUserProfileDocument } from './firebase/firebase';
@@ -50,6 +52,8 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage} />
+          <Route exact path="/createstory" component={CreateStoryPage} />
+          <Route exact path="/user" component={UserPage} />
           <Route
           // if auth, render into homepage.
             exact

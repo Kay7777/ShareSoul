@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 
 const config = {
     apiKey: "AIzaSyAaugNkfiN3HWIyHr7FinyLzJVrd_e1DwY",
@@ -12,8 +13,9 @@ const config = {
     appId: "1:128088604078:web:ca210f8ab7023421669c3f",
     measurementId: "G-HSE6ZN4DNJ"
 };
-
 firebase.initializeApp(config);
+
+
 
 // SigIn with Google || SignUp with email and password 
 // => store credentials into Three places (Authantication, user database, application cache)
@@ -28,6 +30,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
       await userRef.set({
         displayName,
         email,
+        storyID: [],
         createdAt,
         ...additionalData
       });
@@ -42,8 +45,58 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
+// Google Auth
 const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({ prompt: 'select_account' });
 export const signInWithGoogle = () => auth.signInWithPopup(provider);
+
+
+// Storage
+export const storage = firebase.storage();
+
+// Upload Image into Storage (now all done in the createstory.jsx file)
+
+
+// create Story database and update storyID into  user database
+export const createStoryDocument = async (currentUser, {imageURL, story}) => {
+  if (!currentUser) return;
+  const storyID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  const userRef = firestore.doc(`stories/${storyID}`);
+  const createdAt = new Date();
+  try {
+    await userRef.set({
+        imageURL,
+        story,
+        createdAt
+    });
+    await insertStoryIDIntoUserDatabase(storyID, currentUser.id);
+  } catch (error) {
+    console.log('Error creating user: ', error.message);
+  }
+  return userRef;
+}
+// Funtion: update storyID into  user database
+const insertStoryIDIntoUserDatabase = async (storyID, userID) => {
+  const userRef = await firestore.doc(`users/${userID}`);
+  await userRef.get().then( doc => {
+    let story = doc.data().storyID;
+    story.push(storyID)
+    userRef.set({storyID: story},{merge:true});
+  })
+
+}
+
+// Iterate all documents
+export const getStoryFromCurrentUser = async (userID) => {
+  let array = [];
+  const storyRef = firestore.doc(`stories/${userID}`);
+  storyRef.onSnapshot(snapShot => {
+    array.push(snapShot.data);
+  });
+
+  return array;
+}
+
+
 
 export default firebase;
