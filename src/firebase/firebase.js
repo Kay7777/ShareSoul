@@ -80,21 +80,24 @@ const insertStoryIDIntoUserDatabase = async (storyID, userID) => {
   const userRef = await firestore.doc(`users/${userID}`);
   await userRef.get().then( doc => {
     let story = doc.data().storyID;
-    story.push(storyID)
+    story.push(storyID);
     userRef.set({storyID: story},{merge:true});
   })
-
 }
 
-// Iterate all documents
-export const getStoryFromCurrentUser = async (userID) => {
-  let array = [];
-  const storyRef = firestore.doc(`stories/${userID}`);
-  storyRef.onSnapshot(snapShot => {
-    array.push(snapShot.data);
-  });
 
+// retrieve all stories
+export const getAllStory = async () => {
+  let array = [];
+  const storyRef = await firestore.collection("stories");
+  await storyRef.get().then( snapShots => {
+    snapShots.forEach( doc => {
+      const story = [doc.id, doc.data().imageURL, doc.data().story];
+      array.push(story);
+    })
+  })
   return array;
+  
 }
 
 
