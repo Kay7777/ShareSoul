@@ -1,8 +1,10 @@
 import React from "react";
-import CustomButton from "../button/button";
-import { ButtonsBarContainer } from "./homepart.styles";
-import { withRouter, Link } from "react-router-dom";
+import MediaCard from "../card/card";
+// import CustomButton from "../button/button";
+// import { ButtonsBarContainer } from "./homepart.styles";
+// import { withRouter } from "react-router-dom";
 import { getAllStory} from "../../firebase/firebase";
+import { Grid } from '@material-ui/core';
 
 class HomePart extends React.Component {
     constructor(){
@@ -21,26 +23,19 @@ class HomePart extends React.Component {
     render() {
         return(
             <div>
-                this is the home page!
-                <ButtonsBarContainer >
-                    <CustomButton onClick={() => this.props.history.push("/createstory")}>Upload My Story </CustomButton>
-                </ButtonsBarContainer>
                 {
                     this.state.stories ?
-                    this.state.stories.map( story => (
-                        <div>
-                            <img src={story[1]} height="400" width="300"/><br/>
-                            <p>{story[2]}</p>
-                        </div>
-                        
-                    ))
+                    <Grid container direction="row" justify="space-evenly" alignItems="center">
+                        {this.state.stories.map( story => (
+                        <MediaCard imageURL={story[1]} story={story[2]} />
+                        ))}
+                    </Grid>
                     :
                     <div>Waiting for a min! Stories are coming up!</div>
                 }
-                <Link to="/user">UserPage</Link>
             </div>
         )
     }
 }
 
-export default withRouter(HomePart);
+export default HomePart;

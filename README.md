@@ -10,11 +10,15 @@ If you find the user who has a wonderful photo and meaningful story of that, you
 2. Firebase
 
 ## 2020.01.12 -- Version 0.1
-Setting up the ShareSoul project: basic react files and redux for user state. Building redux-persist cache system, redux-select system, redux-logger for eaiser tracking and debugging. 
+1. Setting up the ShareSoul project: basic react files and redux for user state. Building redux-persist cache system, redux-select system, redux-logger for eaiser tracking and debugging. 
+
+## 2020.01.13 -- Version 0.1
+1. Using Firebase to support Authentication system, and building user database
 
 ## 2020.01.14 -- Version 0.2
-Using Firebase to support Authentication system, and building user database
-
-## 2020.01.15 -- Version 0.3
 1. Designing the relation between story database and user database => user has 5 props now (userID, email, displayName, createTime, storyID[]), userID as the prime id and   storyID as the foreign id. Story database has 3 props (storyID, createTime, imageURL, storyText).
 2. Building the function (extracting stories from database) in the main page and user own page.
+
+
+## 2020.01.15 -- Version 0.2
+1. Adding Material UI to decorate main page and user page.

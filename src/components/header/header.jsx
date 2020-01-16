@@ -5,8 +5,8 @@ import { auth } from '../../firebase/firebase';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 const Header = ({currentUser}) => (
-    <div>
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <div style={{paddingBottom: 20}}>
+        <nav className="navbar navbar-expand-lg navbar-light bg-light" >
         <a className="navbar-brand" href="/">ShareSoul</a>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
