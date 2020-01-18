@@ -8,6 +8,7 @@ import SignInPage from './pages/signinpage/signinpage';
 import Header from './components/header/header';
 import CreateStoryPage from "./pages/createstorypage/createstorypage";
 import UserPage from "./pages/userpage/userpage";
+import FriendPage from "./pages/friendpage/friendpage";
 
 // import firebase
 import { auth, createUserProfileDocument } from './firebase/firebase';
@@ -54,6 +55,7 @@ class App extends React.Component {
           <Route exact path='/' component={HomePage} />
           <Route exact path="/createstory" component={CreateStoryPage} />
           <Route exact path="/user" component={UserPage} />
+          <Route exact path="/friend" component={FriendPage} />
           <Route
           // if auth, render into homepage.
             exact

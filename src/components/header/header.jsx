@@ -15,9 +15,12 @@ const Header = ({currentUser}) => (
             <div className="navbar-nav">
             <a className="nav-item nav-link active" href="/user">My</a>
             {currentUser ? 
-            (<a className="nav-item nav-link" href="/signin" onClick={() => auth.signOut()}>LogOut</a>)
+            <div>
+                <a className="nav-item nav-link active" href="/signin" onClick={() => auth.signOut()}>LogOut</a>
+                <a className="nav-item nav-link active" href="/friend" >SoulFriends</a>
+            </div>
             :
-            (<a className="nav-item nav-link" href="/signin">SignIn</a>)
+            <a className="nav-item nav-link" href="/signin">SignIn</a>
             }
             {/* <a class="nav-item nav-link" href="#">Pricing</a> */}
             </div>
